@@ -1,4 +1,4 @@
-import {gql} from 'apollo-server';
+import { gql } from "apollo-server";
 
 const typeDefs = gql`
     type Query {
@@ -8,8 +8,8 @@ const typeDefs = gql`
     type Log {
         date: Date!
         type: LogType!
-        from: IP!
-        to: URL!
+        src: IP!
+        dst: URL!
         msg: String!
     }
 
@@ -20,7 +20,7 @@ const typeDefs = gql`
 
     type LOCATION {
         X: Float!
-        y: Float!
+        : Float!
     }
 
     scalar Date
@@ -33,4 +33,4 @@ const typeDefs = gql`
     }
 `;
 
-export {typeDefs};
+export { typeDefs };
