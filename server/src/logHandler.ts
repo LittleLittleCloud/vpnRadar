@@ -11,11 +11,11 @@ export class LogHandler implements ICrud<Log> {
     private msg: string
   ) {}
   Create() {
-    const sql = `INSERT INTO LOGS (DATE, TYPE, SRC, DST, MSG, LOCATION ) VALUES ${
-      this.date.toDateString
-    },${this.type},${this.src.address},${this.dst},${this.msg},${
+    const sql = `INSERT INTO LOGS (DATE, TYPE, SRC, DST, MSG, LOCATION ) VALUES ('${this.date.toUTCString()}','${
+      this.type
+    }','${this.src.address}','${this.dst}','${this.msg}','${
       this.src.location
-    }`;
+    }')`;
     return new Promise<boolean>((res, rej) => {
       DB.exec(sql, err => {
         if (err) {

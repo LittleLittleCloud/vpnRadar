@@ -24,7 +24,9 @@
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "preLaunchTask": "server-build"
+      "preLaunchTask": "server-build",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}/server"
     },
     {
       "type": "node",
@@ -33,7 +35,9 @@
       "program": "${workspaceFolder}/server/node_modules/mocha/bin/_mocha",
       "args": ["--timeout", "999999", "--colors", "${file}"],
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
+      "internalConsoleOptions": "neverOpen",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}/server"
     }
   ]
 }

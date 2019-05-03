@@ -10,11 +10,11 @@ let db = new Database(Config.db_path, OPEN_CREATE | OPEN_READWRITE, err => {
 });
 
 const sql = `CREATE TABLE IF NOT EXISTS LOGS (
-    DATE PRIMARY KEY,
+    MSG PRIMARY KEY,
+    DATE TEXT NOT NULL,
     TYPE TEXT NOT NULL,
     SRC TEXT NOT NULL,
     DST TEXT NOT NULL,
-    MSG TEXT NOT NULL,
     LOCATION TEXT NOT NULL
 )`;
 

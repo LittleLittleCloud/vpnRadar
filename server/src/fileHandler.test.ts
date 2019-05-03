@@ -1,17 +1,11 @@
 import { Config } from "./config";
-import {
-  unlinkSync,
-  existsSync,
-  writeFileSync,
-  appendFileSync,
-  appendFile
-} from "fs";
+import { unlinkSync, existsSync, writeFileSync, appendFileSync } from "fs";
 import { FileHandler } from "./fileHandler";
 import assert from "assert";
 const TEST_INFO = [
-  "2019-04-04 00:29:26 INFO     connecting mtalk.google.com:5228 from 202.117.43.74:4706",
-  "2019-04-04 00:23:55 INFO     connecting ios.rqd.qq.com:443 from 101.94.97.120:58387",
-  "2019-04-04 00:21:16 INFO     connecting clients4.google.com:443 from 202.117.43.74:4703"
+  "2019-04-04 00:29:26 INFO     connecting mtalk.google.com:5228 from 202.117.43.74:4706\r",
+  "2019-04-04 00:23:55 INFO     connecting ios.rqd.qq.com:443 from 101.94.97.120:58387\r",
+  "2019-04-04 00:21:16 INFO     connecting clients4.google.com:443 from 202.117.43.74:4703\r"
 ];
 describe("test fileHander", async () => {
   before("use test DB and test file", async () => {
@@ -31,11 +25,26 @@ describe("test fileHander", async () => {
   it("test info ", async () => {
     const fileHandler = new FileHandler(Config.log_file, 0);
 
-    appendFile(Config.log_file, TEST_INFO[0], () => {
-      assert(fileHandler.getUpdatedLog()[0].msg == TEST_INFO[0]);
-    });
+    // await new Promise((res, rej) => {
+    //   appendFile(Config.log_file, TEST_INFO[0], () => {
+    //     res();
+    //   });
+    // });
     appendFileSync(Config.log_file, TEST_INFO[1]);
     appendFileSync(Config.log_file, TEST_INFO[2]);
-    assert(fileHandler.getUpdatedLog().length == 2);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let logs = await fileHandler.getUpdatedLog();
+    assert(logs.length == 2);
+    logs = await fileHandler.getUpdatedLog();
+    assert(logs.length == 0);
+    appendFileSync(Config.log_file, TEST_INFO[1]);
+    appendFileSync(Config.log_file, TEST_INFO[2]);
+    appendFileSync(Config.log_file, TEST_INFO[1]);
+    appendFileSync(Config.log_file, TEST_INFO[2]);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    logs = await fileHandler.getUpdatedLog();
+    assert(logs.length == 4);
+    logs = await fileHandler.getUpdatedLog();
+    assert(logs.length == 0);
   });
 });
