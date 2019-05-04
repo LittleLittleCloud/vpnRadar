@@ -13,9 +13,9 @@ export class LogHandler implements ICrud<Log> {
   Create() {
     const sql = `INSERT INTO LOGS (DATE, TYPE, SRC, DST, MSG, LOCATION ) VALUES ('${this.date.toUTCString()}','${
       this.type
-    }','${this.src.address}','${this.dst}','${this.msg}','${
+    }','${this.src.address}','${this.dst}','${this.msg}','${JSON.stringify(
       this.src.location
-    }')`;
+    )}')`;
     return new Promise<boolean>((res, rej) => {
       DB.exec(sql, err => {
         if (err) {

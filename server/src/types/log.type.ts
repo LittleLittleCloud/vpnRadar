@@ -16,4 +16,4 @@ type Log = {
   msg: string;
 };
 
-export { Log, LogType, IP, IP_ADDR };
+export { Log, LogType, IP, IP_ADDR, LOCATION };

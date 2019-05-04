@@ -3,6 +3,7 @@ import { LogHandler } from "./logHandler";
 import { Log } from "./types/log.type";
 import { Mutex } from "./utils/mutex";
 import { EventEmitter } from "events";
+import { IpHandler } from "./ipHandler";
 export class FileHandler {
   //2019-04-03 23:05:32 INFO     connecting clients1.google.com:443 from 202.117.43.74:4665
   private info_regex = /([\d-: ]*) INFO [ ]*connecting ([\w\d.:]*) from ([\w\d.:]*)/;
@@ -24,23 +25,12 @@ export class FileHandler {
     }
     this.fileCursor = stat.size;
     const newLines = buffer.toString().split(/(?:\r\n|\r|\n)/g);
-    newLines.forEach((val, line) => {
+    newLines.forEach(async (val, line) => {
       const info = val.match(this.info_regex);
       if (info) {
-        const log = new LogHandler(
-          new Date(info[1]),
-          "INFO",
-          {
-            address: info[4],
-            //TODO @Xiaoyun IP Location
-            location: {
-              X: 0.0,
-              Y: 0.0
-            }
-          },
-          info[3],
-          val
-        );
+        const ip = new IpHandler(info[3]);
+        await ip.Ready; //wait IP to be ready
+        const log = new LogHandler(new Date(info[1]), "INFO", ip, info[2], val);
         log.Create().then(() => {
           console.log("log success");
         });
