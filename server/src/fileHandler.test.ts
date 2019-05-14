@@ -37,14 +37,5 @@ describe("test fileHander", async () => {
     assert(logs.length == 2);
     logs = await fileHandler.getUpdatedLog();
     assert(logs.length == 0);
-    appendFileSync(Config.log_file, TEST_INFO[1]);
-    appendFileSync(Config.log_file, TEST_INFO[2]);
-    appendFileSync(Config.log_file, TEST_INFO[1]);
-    appendFileSync(Config.log_file, TEST_INFO[2]);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    logs = await fileHandler.getUpdatedLog();
-    assert(logs.length == 4);
-    logs = await fileHandler.getUpdatedLog();
-    assert(logs.length == 0);
   });
 });

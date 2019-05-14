@@ -1,5 +1,6 @@
 import { testAPIrouter } from "./routes/testAPI";
 import cors from "cors";
+import { GraphQL } from "./graphQL";
 var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require("cookie-parser");
@@ -8,7 +9,6 @@ var logger = require("morgan");
 var app = express();
 
 // view engine setup
-
 //options for cors midddleware
 const options: cors.CorsOptions = {
   allowedHeaders: [
@@ -47,5 +47,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+// use graphQL
+GraphQL.listen();
+console.log("enable graphQL at" + GraphQL.graphqlPath);
 
 module.exports = app;
