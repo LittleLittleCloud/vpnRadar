@@ -66,8 +66,14 @@ export class FileHandler {
     this.fileCursor = stat.size;
     console.log(`init file size ${this.fileCursor}`);
     const that = this;
+    let fsWait = false;
     watch(this.filePath, async (eventType, filename) => {
-      if (eventType == "change" && filename == that.filePath) {
+      if (eventType == "change") {
+        console.log('watch',eventType,that.filePath)
+        if(fsWait) return;
+        setTimeout(()=>{
+          fsWait = false;
+        },100);     
         that._ee.emit("change");
       }
     });

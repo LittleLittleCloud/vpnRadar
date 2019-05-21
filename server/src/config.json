@@ -1,5 +1,5 @@
 {
-  "log_file": "log",
+  "log_file": "../../vpn.log",
   "cursor": 0,
   "db_path": "../sqlite.db"
 }
