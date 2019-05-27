@@ -1,4 +1,4 @@
 {
-    "apollo-server": "127.0.0.1:4000",
-    "world-map":"../static/world-map.json"
+  "apollo-server": "127.0.0.1:4000",
+  "world-map": "/world-10m.json"
 }

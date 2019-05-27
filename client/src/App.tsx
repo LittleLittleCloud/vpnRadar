@@ -25,11 +25,9 @@
 
 // export default App;
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import { ApolloProvider } from "react-apollo";
 import { Client } from "./graphQL";
-import Map from './components/map';
-
+import WorldMap from "./components/map";
 class App extends Component<{}, { apiResponse: string }> {
   constructor(props) {
     super(props);
@@ -50,12 +48,10 @@ class App extends Component<{}, { apiResponse: string }> {
       <ApolloProvider client={Client}>
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
+            <p className="App-intro">{this.state.apiResponse}</p>
           </header>
-          <p className="App-intro">{this.state.apiResponse}</p>
-          <p className="Map">{Map}</p>
         </div>
+        <WorldMap />
       </ApolloProvider>
     );
   }

@@ -1,4 +1,3 @@
-import ConfigJson from './config.json'
+import ConfigJson from "./config.json";
 
-const Config = ConfigJson;
-export { Config }
+export { ConfigJson as Config };
