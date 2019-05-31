@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Client } from "../graphQL";
 import { gql } from "apollo-boost";
-import { Markers, Marker } from "react-simple-maps";
+import { Markers, Marker, MarkerType } from "react-simple-maps";
 const UpdateLogs = gql`
   query UpdateLogs {
     UpdatedLogs {
@@ -21,6 +21,14 @@ async function GetUpdateLogs() {
   });
 }
 
+const markers: MarkerType[] = [
+  { coordinates: [-68.1193, -16.4897] },
+  { coordinates: [-47.8825, -15.7942] },
+  { coordinates: [-70.6693, -33.4489] },
+  { coordinates: [-74.0721, 4.711] },
+  { coordinates: [-78.4678, -0.1807] }
+];
+
 type Cord = {
   coordinates: [number, number];
   live: number;
@@ -29,7 +37,13 @@ export class ReactMarker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cord: []
+      cord: [
+        {
+          coordinates: [-58.3816, -34.6037],
+          live: 1000,
+          markerOffset: -35
+        }
+      ]
     };
   }
 
@@ -52,7 +66,7 @@ export class ReactMarker extends React.Component {
   }
 
   render() {
-    const currentData: Cord[] = this.state["data"];
+    const currentData = markers;
     return (
       <Markers>
         {currentData.map((marker, i) => (

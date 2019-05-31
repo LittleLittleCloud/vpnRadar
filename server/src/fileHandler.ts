@@ -39,16 +39,16 @@ export class FileHandler {
             info[2],
             val
           );
-          log.Create().then(() => {
-            console.log("log success");
-          });
+          // not write to db currently
+          // log.Create().then(() => {
+          // console.log("log success");
+          // });
           // put log in _untraced_log
           this._untraced_log.push(log.toLog());
         }
       });
       this._mutex.release();
     } catch (e) {
-      console.log(e);
       this._mutex.release();
       this._ee.emit("change");
     }
@@ -69,11 +69,11 @@ export class FileHandler {
     let fsWait = false;
     watch(this.filePath, async (eventType, filename) => {
       if (eventType == "change") {
-        console.log('watch',eventType,that.filePath)
-        if(fsWait) return;
-        setTimeout(()=>{
+        console.log("watch", eventType, that.filePath);
+        if (fsWait) return;
+        setTimeout(() => {
           fsWait = false;
-        },100);     
+        }, 100);
         that._ee.emit("change");
       }
     });
